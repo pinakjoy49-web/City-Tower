@@ -1,182 +1,249 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Processing</title>
 
-  <title>Payment Update</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Noto Sans Bengali",Arial,sans-serif;
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(0,210,255,.15),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(124,58,237,.18),transparent 30%),
+        #070b16;
+    color:white;
+    padding:20px;
+    overflow:hidden;
+}
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+.bg-circle{
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.05);
+    animation:float 7s ease-in-out infinite;
+}
+
+.c1{top:-120px;left:-100px;}
+.c2{bottom:-150px;right:-100px;width:400px;height:400px;animation-delay:2s;}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(-20px) scale(1.04);}
+}
+
+.card{
+    position:relative;
+    width:100%;
+    max-width:500px;
+    padding:42px 28px;
+    text-align:center;
+    border-radius:28px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 25px 70px rgba(0,0,0,.45);
+}
+
+.icon{
+    width:92px;
+    height:92px;
+    margin:0 auto 25px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#00d9ff,#6d5dfc);
+    box-shadow:0 0 35px rgba(0,217,255,.25);
+    animation:pulse 2s infinite;
+}
+
+.icon svg{
+    width:45px;
+    height:45px;
+    fill:none;
+    stroke:white;
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+@keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(0,217,255,.25);}
+    50%{box-shadow:0 0 0 15px rgba(0,217,255,0);}
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 14px;
+    border-radius:30px;
+    background:rgba(0,217,255,.1);
+    border:1px solid rgba(0,217,255,.25);
+    color:#55e7ff;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:30px;
+    margin-bottom:15px;
+    font-weight:800;
+}
+
+h1 span{
+    background:linear-gradient(90deg,#4de8ff,#9b7cff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.message{
+    color:#c5ccda;
+    font-size:16px;
+    line-height:1.9;
+}
+
+.status{
+    margin-top:28px;
+    padding:18px;
+    border-radius:18px;
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.07);
+    text-align:left;
+}
+
+.status-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#dce2ed;
+    font-size:14px;
+    margin:10px 0;
+}
+
+.dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#35e58b;
+    box-shadow:0 0 12px #35e58b;
+    animation:blink 1.5s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:.35;}
+}
+
+.loader{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,.08);
+    border-radius:20px;
+    margin-top:25px;
+    overflow:hidden;
+}
+
+.loader span{
+    display:block;
+    width:45%;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#00d9ff,#8b5cf6);
+    animation:loading 2s ease-in-out infinite;
+}
+
+@keyframes loading{
+    0%{transform:translateX(-110%);}
+    100%{transform:translateX(240%);}
+}
+
+.note{
+    margin-top:22px;
+    font-size:12px;
+    color:#858da0;
+}
+
+@media(max-width:480px){
+    .card{
+        padding:35px 20px;
+        border-radius:23px;
     }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      font-family: "Noto Sans Bengali", sans-serif;
-      background:
-        radial-gradient(circle at top left, #e8f1ff 0%, transparent 35%),
-        radial-gradient(circle at bottom right, #dff7ef 0%, transparent 35%),
-        #f7f9fc;
-      color: #172033;
+    h1{
+        font-size:25px;
     }
 
-    .container {
-      width: 100%;
-      max-width: 620px;
+    .message{
+        font-size:14px;
     }
-
-    .card {
-      position: relative;
-      overflow: hidden;
-      background: rgba(255,255,255,0.94);
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 26px;
-      padding: 34px 26px 30px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(24, 39, 75, 0.12);
-    }
-
-    .top-line {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, #2563eb, #06b6d4, #10b981);
-    }
-
-    .icon {
-      width: 72px;
-      height: 72px;
-      margin: 4px auto 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 34px;
-      background: #fff7df;
-      border: 8px solid #fffaf0;
-      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.12);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 7px 15px;
-      margin-bottom: 15px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #b45309;
-      background: #fff7df;
-    }
-
-    h1 {
-      font-size: 25px;
-      line-height: 1.45;
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-
-    .message {
-      font-size: 16px;
-      line-height: 2;
-      color: #596579;
-      font-weight: 500;
-    }
-
-    .highlight {
-      display: inline-block;
-      margin: 18px 0;
-      padding: 12px 20px;
-      border-radius: 14px;
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-size: 17px;
-      font-weight: 800;
-      border: 1px solid #dbeafe;
-    }
-
-    .thanks {
-      margin-top: 22px;
-      padding-top: 20px;
-      border-top: 1px solid #edf0f5;
-      color: #344054;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 15px;
-      }
-
-      .card {
-        padding: 30px 20px 25px;
-        border-radius: 22px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      .message {
-        font-size: 15px;
-        line-height: 1.9;
-      }
-
-      .highlight {
-        font-size: 16px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <main class="container">
-    <section class="card">
+<div class="bg-circle c1"></div>
+<div class="bg-circle c2"></div>
 
-      <div class="top-line"></div>
+<div class="card">
 
-      <div class="icon">⚠️</div>
+    <div class="icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 6v6l4 2"/>
+            <circle cx="12" cy="12" r="9"/>
+        </svg>
+    </div>
 
-      <div class="badge">গুরুত্বপূর্ণ পেমেন্ট আপডেট</div>
+    <div class="badge">● LIVE PAYMENT STATUS</div>
 
-      <h1>যাদের পেমেন্ট নিয়ে সমস্যা হচ্ছে</h1>
+    <h1>পেমেন্ট <span>প্রসেসিং</span> হচ্ছে</h1>
 
-      <p class="message">
-        সাইটের আপডেটের কারণে অনেকের পেমেন্ট রিকোয়েস্ট
-        সঠিকভাবে আমাদের কাছে আসেনি। এ কারণে কিছু পেমেন্ট
-        বর্তমানে অপেক্ষমাণ রয়েছে।
-      </p>
+    <p class="message">
+        সকলের পেমেন্ট ধীরে ধীরে ক্লিয়ার করা হচ্ছে।
+        বর্তমানে সবগুলো পেমেন্ট একে একে প্রসেসিংয়ের মধ্যে রয়েছে।
+        অনুগ্রহ করে কিছুটা সময় অপেক্ষা করুন।
+    </p>
 
-      <div class="highlight">
-        🕘 রবিবার রাত ৯টায় সবার পেমেন্ট ক্লিয়ার করা হবে
-      </div>
+    <div class="status">
 
-      <p class="message">
-        সমস্যাটি ইতোমধ্যে ঠিক করার কাজ চলছে। সমস্যা সমাধানের
-        পর সকল পেমেন্ট একসাথে ক্লিয়ার করে দেওয়া হবে।
-      </p>
+        <div class="status-row">
+            <div class="dot"></div>
+            পেমেন্ট রিকোয়েস্ট যাচাই করা হচ্ছে
+        </div>
 
-      <div class="thanks">
-        🙏 সাময়িক অসুবিধার জন্য আন্তরিকভাবে দুঃখিত।<br>
-        আপনাদের সহযোগিতার জন্য ধন্যবাদ।
-      </div>
+        <div class="status-row">
+            <div class="dot"></div>
+            একে একে পেমেন্ট প্রসেস করা হচ্ছে
+        </div>
 
-    </section>
-  </main>
+        <div class="status-row">
+            <div class="dot"></div>
+            সফলভাবে ক্লিয়ার করা হচ্ছে
+        </div>
+
+    </div>
+
+    <div class="loader">
+        <span></span>
+    </div>
+
+    <div class="note">
+        অনুগ্রহ করে বারবার পেমেন্ট রিকোয়েস্ট করবেন না।
+    </div>
+
+</div>
 
 </body>
 </html>
